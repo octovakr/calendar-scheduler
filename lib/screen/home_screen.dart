@@ -1,4 +1,5 @@
 import 'package:calendar_scheduler/component/calendar.dart';
+import 'package:calendar_scheduler/component/custom_text_field.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
@@ -21,6 +22,38 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return Container(
+                color: Colors.white,
+                height: 700,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsGeometry.fromLTRB(8, 16, 8, 0),
+                      child: Row(
+                        children: [
+                          Expanded(child: CustomTextField(label: '시작 시간')),
+                          SizedBox(width: 16.0),
+                          Expanded(child: CustomTextField(label: '마감 시간')),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        backgroundColor: primaryColor,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
