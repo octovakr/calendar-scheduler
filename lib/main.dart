@@ -8,6 +8,9 @@ void main() async {
 
   runApp(
     MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'NotoSans',
+      ),
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     )
