@@ -16,9 +16,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   DateTime selectedDay = DateTime.utc(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
+    DateTime
+        .now()
+        .year,
+    DateTime
+        .now()
+        .month,
+    DateTime
+        .now()
+        .day,
   );
 
   /// {
@@ -75,21 +81,45 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Padding(
                 padding: EdgeInsetsGeometry.fromLTRB(16, 16, 16, 0),
-                child: ListView(
-                  children: schedules.containsKey(selectedDay)
-                      ? schedules[selectedDay]!
-                            .map(
-                              (e) => ScheduleCard(
-                                startTime: e.startTime,
-                                endTime: e.endTime,
-                                content: e.content,
-                                color: Color(
-                                  int.parse('ff${e.color}', radix: 16),
-                                ),
-                              ),
-                            )
-                            .toList()
-                      : [],
+
+                /// ListView는 children 안에 입력된 모든 위젯을 한번에 그리며,
+                /// 모든 것을 메모리에 들고 있으므로, 데이터가 많아지면 퍼포먼스가 느려짐.
+                /// 하드웨어를 적게 사용하려면 lazy loading을 해야 함.
+                // child: ListView(
+                // children: schedules.containsKey(selectedDay)
+                //     ? schedules[selectedDay]!
+                //           .map(
+                //             (e) => ScheduleCard(
+                //               startTime: e.startTime,
+                //               endTime: e.endTime,
+                //               content: e.content,
+                //               color: Color(
+                //                 int.parse('ff${e.color}', radix: 16),
+                //               ),
+                //             ),
+                //           )
+                //           .toList()
+                //     : [],
+                // ),
+                child: ListView.separated(
+                  itemCount: schedules.containsKey(selectedDay)
+                      ? schedules[selectedDay]!.length
+                      : 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    final selectedSchedules = schedules[selectedDay]!;
+                    final scheduleModel = selectedSchedules[index];
+
+                    return ScheduleCard(
+                        startTime: scheduleModel.startTime,
+                        endTime: scheduleModel.endTime,
+                        content: scheduleModel.content,
+                        color: Color(
+                          int.parse('ff${scheduleModel.color}', radix: 16),
+                        ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(height: 16),
                 ),
               ),
             ),
