@@ -101,6 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 //           .toList()
                 //     : [],
                 // ),
+                /// 많은 데이터를 화면에 보여주기 위해 lazy loading을 해야 할 때,
+                /// ListView.builder 또는 ListView.separated를 적극 활용 가능함.
+                /// ListView.separated에서는 separatorBuilder를 통해서,
+                /// 각 위젯 사이사이에 무언가를 렌더링해줄 수 있다.
                 child: ListView.separated(
                   itemCount: schedules.containsKey(selectedDay)
                       ? schedules[selectedDay]!.length
