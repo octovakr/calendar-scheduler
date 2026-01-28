@@ -1,5 +1,6 @@
 import 'package:calendar_scheduler/component/calendar.dart';
 import 'package:calendar_scheduler/component/custom_text_field.dart';
+import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
@@ -27,35 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
           showModalBottomSheet(
             context: context,
             builder: (_) {
-              return Container(
-                color: Colors.white,
-                height: 600,
-                child: Padding(
-                  padding: EdgeInsetsGeometry.fromLTRB(8, 16, 8, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(child: CustomTextField(label: '시작 시간')),
-                          SizedBox(width: 16.0),
-                          Expanded(child: CustomTextField(label: '마감 시간')),
-                        ],
-                      ),
-                      Expanded(
-                        child: CustomTextField(label: '내용', expand: true),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return ScheduleBottomSheet();
             },
           );
         },
         backgroundColor: primaryColor,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       body: SafeArea(
         child: Column(
@@ -65,10 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onDaySelected: onDaySelected,
               selectedDayPredicate: selectedDayPredicate,
             ),
-            TodayBanner(
-              selectedDay: selectedDay,
-              taskCount: 0,
-            ),
+            TodayBanner(selectedDay: selectedDay, taskCount: 0),
             Expanded(
               child: Padding(
                 padding: EdgeInsetsGeometry.fromLTRB(16, 16, 16, 0),
@@ -101,5 +76,4 @@ class _HomeScreenState extends State<HomeScreen> {
     if (selectedDay == null) return false;
     return date.isAtSameMomentAs(selectedDay!);
   }
-
 }
