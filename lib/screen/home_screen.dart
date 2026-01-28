@@ -29,20 +29,23 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (_) {
               return Container(
                 color: Colors.white,
-                height: 700,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(8, 16, 8, 0),
-                      child: Row(
+                height: 600,
+                child: Padding(
+                  padding: EdgeInsetsGeometry.fromLTRB(8, 16, 8, 0),
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
                           Expanded(child: CustomTextField(label: '시작 시간')),
                           SizedBox(width: 16.0),
                           Expanded(child: CustomTextField(label: '마감 시간')),
                         ],
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: CustomTextField(label: '내용', expand: true),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
