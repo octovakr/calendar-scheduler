@@ -10,6 +10,12 @@ class ScheduleBottomSheet extends StatefulWidget {
 }
 
 class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  int? startTime;
+  int? endTime;
+  String? content;
+  String? category;
+
   String selectedColor = categoryColors.first;
 
   @override
@@ -21,6 +27,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
         child: Padding(
           padding: EdgeInsetsGeometry.fromLTRB(8, 16, 8, 0),
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 _Time(
@@ -44,7 +51,9 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
                   },
                 ),
                 SizedBox(height: 8),
-                _SaveButton(),
+                _SaveButton(
+                  onPressed: onSaveButtonPressed,
+                ),
               ],
             ),
           ),
@@ -53,28 +62,71 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
     );
   }
 
-  void onStartTimeSaved(String? val) {
+  void onSaveButtonPressed() {
+    final isValid = formKey.currentState!.validate();
 
+    if (isValid) {
+      formKey.currentState!.save();
+      Navigator.of(context).pop();
+    }
+
+    print(startTime);
+    print(endTime);
+    print(content);
+    print(category);
+  }
+
+  void onStartTimeSaved(String? val) {
+    if (val == null) return;
+    startTime = int.parse(val);
   }
 
   String? onStartTimeValidate(String? val) {
-
+    if (val == null) {
+      return '시작 시간을 입력해주세요.';
+    }
+    if (int.tryParse(val) == null) {
+      return '숫자만 입력해주세요.';
+    }
+    final time = int.parse(val);
+    if (time > 24 || time < 0) {
+      return '0 ~ 24시 사이로 입력해주세요.';
+    }
+    return null;
   }
 
   void onEndTimeSaved(String? val) {
-
+    if (val == null) return;
+    endTime = int.parse(val);
   }
 
   String? onEndTimeValidate(String? val) {
-
+    if (val == null) {
+      return '시작 시간을 입력해주세요.';
+    }
+    if (int.tryParse(val) == null) {
+      return '숫자만 입력해주세요.';
+    }
+    final time = int.parse(val);
+    if (time > 24 || time < 0) {
+      return '0 ~ 24시 사이로 입력해주세요.';
+    }
+    return null;
   }
 
   void onContentSaved(String? val) {
-
+    if (val == null) return;
+    content = val;
   }
 
   String? onContentValidate(String? val) {
-
+    if (val == null) {
+      return '내용을 입력해주세요.';
+    }
+    if (val.length < 5) {
+      return '5자 이상 입력해주세요.';
+    }
+    return null;
   }
 }
 
@@ -191,7 +243,12 @@ class _Categories extends StatelessWidget {
 }
 
 class _SaveButton extends StatelessWidget {
-  const _SaveButton({super.key});
+  final VoidCallback onPressed;
+
+  const _SaveButton({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -199,9 +256,7 @@ class _SaveButton extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: (){
-
-            },
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
