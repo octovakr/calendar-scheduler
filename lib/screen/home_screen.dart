@@ -31,28 +31,28 @@ class _HomeScreenState extends State<HomeScreen> {
   ///   2026-01-28: [Schedule, Schedule],
   ///   2026-01-29: [Schedule, Schedule],
   /// }
-  Map<DateTime, List<Schedule>> schedules = {
-    DateTime.utc(2026, 1, 10): [
-      Schedule(
-        id: 1,
-        startTime: 11,
-        endTime: 12,
-        content: '플러터 공부하기',
-        date: DateTime.utc(2026, 1, 10),
-        color: categoryColors[0],
-        createdAt: DateTime.now().toUtc(),
-      ),
-      Schedule(
-        id: 2,
-        startTime: 14,
-        endTime: 16,
-        content: '회의',
-        date: DateTime.utc(2026, 1, 10),
-        color: categoryColors[1],
-        createdAt: DateTime.now().toUtc(),
-      ),
-    ],
-  };
+  // Map<DateTime, List<ScheduleTable>> schedules = {
+  //   DateTime.utc(2026, 1, 10): [
+  //     ScheduleTable(
+  //       id: 1,
+  //       startTime: 11,
+  //       endTime: 12,
+  //       content: '플러터 공부하기',
+  //       date: DateTime.utc(2026, 1, 10),
+  //       color: categoryColors[0],
+  //       createdAt: DateTime.now().toUtc(),
+  //     ),
+  //     ScheduleTable(
+  //       id: 2,
+  //       startTime: 14,
+  //       endTime: 16,
+  //       content: '회의',
+  //       date: DateTime.utc(2026, 1, 10),
+  //       color: categoryColors[1],
+  //       createdAt: DateTime.now().toUtc(),
+  //     ),
+  //   ],
+  // };
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +68,16 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
           if (schedule == null) return;
-          setState(() {
-            schedules = {
-              ...schedules,
-              schedule.date: [
-                if (schedules.containsKey(schedule.date))
-                  ...schedules[schedule.date]!,
-                schedule,
-              ],
-            };
-          });
+          // setState(() {
+          //   schedules = {
+          //     ...schedules,
+          //     schedule.date: [
+          //       if (schedules.containsKey(schedule.date))
+          //         ...schedules[schedule.date]!,
+          //       schedule,
+          //     ],
+          //   };
+          // });
         },
         backgroundColor: primaryColor,
         child: Icon(Icons.add, color: Colors.white),
@@ -119,19 +119,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 /// ListView.separated에서는 separatorBuilder를 통해서,
                 /// 각 위젯 사이사이에 무언가를 렌더링해줄 수 있다.
                 child: ListView.separated(
-                  itemCount: schedules.containsKey(selectedDay)
-                      ? schedules[selectedDay]!.length
-                      : 0,
+                  itemCount: 0,
                   itemBuilder: (BuildContext context, int index) {
-                    final selectedSchedules = schedules[selectedDay]!;
-                    final scheduleModel = selectedSchedules[index];
+                    // final selectedSchedules = schedules[selectedDay]!;
+                    // final scheduleModel = selectedSchedules[index];
 
                     return ScheduleCard(
-                        startTime: scheduleModel.startTime,
-                        endTime: scheduleModel.endTime,
-                        content: scheduleModel.content,
+                        startTime: 12,
+                        endTime: 14,
+                        content: 'test',
                         color: Color(
-                          int.parse('ff${scheduleModel.color}', radix: 16),
+                          int.parse('ff000000', radix: 16),
                         ),
                     );
                   },

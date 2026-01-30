@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 
 // model을 drift table로 변환
 
-class Schedule extends Table {
+class ScheduleTable extends Table {
   // id
   IntColumn get id => integer().autoIncrement()();
 
