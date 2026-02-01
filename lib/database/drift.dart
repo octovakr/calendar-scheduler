@@ -20,6 +20,10 @@ class AppDatabase extends _$AppDatabase {
   // code generation은 우리 코드를 보고 이름을 짓는다. 꼭 _$(클래스이름)을 extend 해줘야 한다.
   AppDatabase() : super(_openConnection());
 
+  Future<List<ScheduleTableData>> getSchedules() => select(scheduleTable).get();
+
+  Future<int> createSchedule(ScheduleTableCompanion data) => into(scheduleTable).insert(data);
+
   @override
   int get schemaVersion => 1;
   /// 우리가 만드는 테이블 상태는 버전으로 관리된다.
